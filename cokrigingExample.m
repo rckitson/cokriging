@@ -10,8 +10,8 @@ a = 1; b = 100;
 lf = @(x) 0.5*asin(1./x);
 hf = @(x) asin(1./(x)) - 1;
 
-ncreate = 12;
-nsamp = 5*ncreate;
+ncreate = 5;
+nsamp = 10*ncreate;
 lb = 0;
 ub = pi/2;
 
@@ -25,9 +25,6 @@ plot(xx,hf(xx),'b')
 xlim([lb ub]);
 axis off
 grid off
-
-set(gcf,'papersize',[4 3],'paperposition',[0 0 4 3])
-saveas(gcf,'krigingExample_1.pdf')
 
 
 clc;
@@ -43,8 +40,8 @@ clf;
 % Co-Kriging
 plot(xxlf,lf(xxlf),'r-');
 hold on
-scatter(xx,hf(xx),8^2,'bs','filled');
 plot(xxlf,hf(xxlf),'b')
+scatter(xx,hf(xx),8^2,'bs','filled');
 % ylim([0 0.5]);
 xlim([lb ub]);
 axis off 
@@ -75,7 +72,8 @@ kg_plot = sortrows([ss, kg],1);
 plot(cok_plot(:,1), cok_plot(:,2),'k')
 plot(kg_plot(:,1), kg_plot(:,2),'k--')
 
-% legend('High-Fidelity','Low-Fidelity','Samples','Co-Kriging','Reconstruction','Location','SouthEast')
+legend('Low-Fidelity','High-Fidelity','Samples','Co-Kriging','Kriging','Location','SouthWest')
+legend boxoff
 
 y1 = hf(ss(:,1));
 y2 = cok;
@@ -85,17 +83,5 @@ axis off
 grid off
 
 set(gcf,'papersize',[4 3],'paperposition',[0 0 4 3])
-saveas(gcf,'krigingExample_3.pdf')
-
-return
-
-%%
-figure(6)
-clf;
-bar(err)
-set(gca,'yscale','log')
-ylabel('Normalized RMSE')
-set(gca,'xTickLabel',{'Kriging','Co-Kriging','Hierarchical Kriging','Hierarchical-Co-Kriging'})
-set(gcf,'papersize',2*[4 3],'paperposition',2*[0 0 4 3])
-saveas(gcf,'krigingExample_6.pdf')
+saveas(gcf,'krigingExample.pdf')
 
